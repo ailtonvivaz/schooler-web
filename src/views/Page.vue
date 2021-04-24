@@ -1,6 +1,6 @@
 <template>
-  <v-container>
-    <v-card v-if="user">
+  <v-container v-if="user">
+    <v-card>
       <v-card-title>
         {{ user.name }}
       </v-card-title>
@@ -14,7 +14,6 @@
 
 <script lang="ts">
 import { Component, Vue } from "vue-property-decorator";
-import axios from "axios";
 import { namespace } from "vuex-class";
 import User from "@/models/user.model";
 const Auth = namespace("Auth");
@@ -25,14 +24,10 @@ export default class Page extends Vue {
   public loggedIn!: boolean;
 
   @Auth.State
-  public user!: User | null;
+  public user!: User;
 
-  mouted(): void {
-    if (this.user) {
-      axios.defaults.headers.common[
-        "Authorization"
-      ] = `Bearer ${this.user.token}`;
-    } else {
+  beforeMount(): void {
+    if (!this.user) {
       this.$router.replace({ name: "login" });
     }
   }

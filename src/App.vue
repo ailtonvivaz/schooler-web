@@ -7,15 +7,15 @@
 </template>
 
 <script lang="ts">
-import Vue from "vue";
+import { Component, Vue } from "vue-property-decorator";
 
-export default Vue.extend({
-  name: "App",
-
+@Component({
   components: {},
-
-  data: () => ({
-    //
-  }),
-});
+  watch: {
+    $route(to) {
+      document.title = `Schooler | ${to.meta.title}` || "Schooler";
+    },
+  },
+})
+export default class App extends Vue {}
 </script>

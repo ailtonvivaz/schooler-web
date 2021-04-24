@@ -14,20 +14,26 @@ const routes: Array<RouteConfig> = [
         path: "",
         name: "dashboard",
         component: Dashboard,
+        meta: {
+          title: "Dashboard",
+        },
       },
     ],
   },
   {
     path: "/login",
     name: "login",
+    meta: {
+      title: "Login",
+    },
     // route level code-splitting
     // this generates a separate chunk (about.[hash].js) for this route
     // which is lazy-loaded when the route is visited.
     component: () =>
       import(/* webpackChunkName: "login" */ "../views/Login.vue"),
   },
-  // otherwise redirect to home
-  { path: "*", redirect: "/" },
+  // // otherwise redirect to home
+  // { path: "*", redirect: "/" },
 ];
 
 const router = new VueRouter({

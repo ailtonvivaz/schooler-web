@@ -8,7 +8,12 @@
               <p class="display-1 text--primary">Login</p>
             </v-card-title>
             <v-col>
-              <v-form ref="form" v-model="valid" lazy-validation>
+              <v-form
+                ref="form"
+                v-model="valid"
+                lazy-validation
+                @keyup.enter="validate"
+              >
                 <v-text-field
                   label="Usuário"
                   v-model="username"
@@ -82,6 +87,9 @@ export default class Login extends Vue {
   @Auth.State("loggingIn")
   public loading!: boolean;
 
+  @Auth.State
+  public loggedIn!: boolean;
+
   usernameRules = [
     function(v: string): Rule {
       return !!v || "É necessário informar o usuário";
@@ -109,6 +117,7 @@ export default class Login extends Vue {
   }
 
   validate(): void {
+    console.log("validate");
     if (this.form.validate()) {
       this.login({
         username: this.username,
@@ -116,7 +125,7 @@ export default class Login extends Vue {
       })
         .then(() => {
           console.log("success");
-          this.$router.push({ name: "dashbord" });
+          this.$router.push({ name: "dashboard" });
         })
         .catch(() => {
           this.hasError = true;
