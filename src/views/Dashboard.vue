@@ -45,8 +45,12 @@
     </div>
     <div v-else>
       <v-card>
-        <v-card-text>
+        <v-card-text v-if="!hasError">
           Carregando Cursos
+        </v-card-text>
+        <v-card-text v-else>
+          Ocorreu um erro ao carregar os cursos. Verifique se não precisa
+          aceitar os termos da LGPD no Intranet.
         </v-card-text>
       </v-card>
     </div>
@@ -63,6 +67,7 @@ import "@/extensions/number.extension";
 @Component
 export default class Dashboard extends Vue {
   courses: Array<Course> = [];
+  hasError = false;
 
   mounted(): void {
     if (this.courses.length > 0) {
@@ -84,6 +89,7 @@ export default class Dashboard extends Vue {
       })
       .catch((error) => {
         console.log(error);
+        this.hasError = true;
       });
   }
 
